@@ -76,7 +76,8 @@ VoicePilot AI is a full-stack, voice-activated personal assistant web app with s
 - Reminders are stored with UTC timestamp plus original timezone.
 - Vercel cron calls api/reminders/due each minute.
 - Endpoint uses Redis lock to avoid overlapping runs.
-- Due reminders are marked sent and in-app notifications are created.
+- Due reminders are marked sent and in-app notifications are created
+  
 
 ## Folder Highlights
 
