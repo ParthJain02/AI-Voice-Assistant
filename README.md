@@ -23,6 +23,8 @@ VoicePilot AI is a full-stack, voice-activated personal assistant web app with s
 - Natural language reminders: parses phrases like "remind me tomorrow at 7 PM to call mom" into structured reminder data.
 - Reminder delivery channels: choose in-app or email delivery with provider abstraction.
 - Email retry policy: failed email reminders are retried with exponential backoff and move to FAILED after max attempts.
+- Manual recovery: failed reminders can be retried from the dashboard.
+- Debug telemetry: reminder delivery summary and recent reminder delivery events via api/reminders/telemetry.
 - Reminder engine: timezone-aware persistence and scheduled due processing endpoint for cron.
 - Settings: display name, voice output toggle, preferred voice, theme preference, delete-account placeholder.
 - Security: server-side authorization checks, Zod validation, AI route rate limiting, secret-safe env handling.

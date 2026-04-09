@@ -13,6 +13,8 @@ type Reminder = {
   deliveredAt: string | null;
   status: "PENDING" | "SENT" | "FAILED";
   channel: "IN_APP" | "EMAIL";
+  retryCount: number;
+  lastError: string | null;
 };
 
 export function RemindersClient() {
@@ -58,6 +60,16 @@ export function RemindersClient() {
 
     setTitle("");
     setRemindAt("");
+    await load();
+  }
+
+  async function retryReminderNow(id: string) {
+    await fetch(`/api/reminders/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "retryNow" }),
+    });
+
     await load();
   }
 
@@ -116,11 +128,18 @@ export function RemindersClient() {
                     >
                       {item.status}
                     </span>
+                    {item.status === "FAILED" ? (
+                      <Button variant="secondary" onClick={() => retryReminderNow(item.id)}>
+                        Retry now
+                      </Button>
+                    ) : null}
                   </div>
                 </div>
                 <p className="text-xs text-zinc-500">
                   Delivered: {item.deliveredAt ? format(new Date(item.deliveredAt), "PPpp") : "Not delivered"}
                 </p>
+                <p className="text-xs text-zinc-500">Retries: {item.retryCount}</p>
+                {item.lastError ? <p className="text-xs text-amber-600 dark:text-amber-300">Last error: {item.lastError}</p> : null}
               </li>
             ))}
           </ul>
